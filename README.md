@@ -10,19 +10,19 @@
 
 3. Какой командой можно зашифровать файл?
 
-ОТВЕТ: ansible-vault encrypt data
+ОТВЕТ: ansible-vault encrypt 
 
 4. Какой командой можно расшифровать файл?
 
-ОТВЕТ: ansible-vault decrypt data
+ОТВЕТ: ansible-vault decrypt 
 
 5. Можно ли посмотреть содержимое зашифрованного файла без команды расшифровки файла? Если можно, то как?
 
-ОТВЕТ:  ansible-vault view data
+ОТВЕТ:  ansible-vault view 
 
 6. Как выглядит команда запуска `playbook`, если переменные зашифрованы?
 
-ОТВЕТ: ansible-playbook -i ./invetory/test.yml site.yml --ask-vault-password
+ОТВЕТ: ansible-playbook --ask-vault-pass playbook.yml
 
 7. Как называется модуль подключения к host на windows?
 
@@ -34,5 +34,5 @@
 
 9. Какой параметр из модуля подключения `ssh` необходим для того, чтобы определить пользователя, под которым необходимо совершать подключение?
 
-ОТВЕТ: remote_user ( set via: cli:,env:,ini:,vars:)
+ОТВЕТ: remote_user 
 
