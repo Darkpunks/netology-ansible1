@@ -1,38 +1,232 @@
-# РЎР°РјРѕРєРѕРЅС‚СЂРѕР»СЊ РІС‹РїРѕР»РЅРµРЅРµРЅРёСЏ Р·Р°РґР°РЅРёСЏ
+1. Попробуйте запустить playbook на окружении из test.yml, зафиксируйте какое значение имеет факт some_fact для указанного хоста при выполнении playbook'a.
 
-1. Р“РґРµ СЂР°СЃРїРѕР»РѕР¶РµРЅ С„Р°Р№Р» СЃ `some_fact` РёР· РІС‚РѕСЂРѕРіРѕ РїСѓРЅРєС‚Р° Р·Р°РґР°РЅРёСЏ?
+```
+ivan@ubt-tst:~/netology-ansible1$ ansible-playbook -i inventory/test.yml site.yml
 
-РћРўР’Р•Рў: group_vars/all/examp.yml
+PLAY [Print os facts] ***************************************************************************************************
 
-2. РљР°РєР°СЏ РєРѕРјР°РЅРґР° РЅСѓР¶РЅР° РґР»СЏ Р·Р°РїСѓСЃРєР° РІР°С€РµРіРѕ `playbook` РЅР° РѕРєСЂСѓР¶РµРЅРёРё `test.yml`?
+TASK [Gathering Facts] **************************************************************************************************
+ok: [localhost]
 
-РћРўР’Р•Рў: ansible-playbook -i ./invetory/test.yml site.yml
+TASK [Print OS] *********************************************************************************************************
+ok: [localhost] => {
+    "msg": "Ubuntu"
+}
 
-3. РљР°РєРѕР№ РєРѕРјР°РЅРґРѕР№ РјРѕР¶РЅРѕ Р·Р°С€РёС„СЂРѕРІР°С‚СЊ С„Р°Р№Р»?
+TASK [Print fact] *******************************************************************************************************
+ok: [localhost] => {
+    "msg": 12
+}
 
-РћРўР’Р•Рў: ansible-vault encrypt 
+PLAY RECAP **************************************************************************************************************
+localhost                  : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
 
-4. РљР°РєРѕР№ РєРѕРјР°РЅРґРѕР№ РјРѕР¶РЅРѕ СЂР°СЃС€РёС„СЂРѕРІР°С‚СЊ С„Р°Р№Р»?
 
-РћРўР’Р•Рў: ansible-vault decrypt 
+2. Найдите файл с переменными (group_vars) в котором задаётся найденное в первом пункте значение и поменяйте его на 'all default fact'.
+```
+ivan@ubt-tst:~/netology-ansible1$ vi group_vars/all/examp.yml
+```
+```
+ivan@ubt-tst:~/netology-ansible1$ ansible-playbook -i inventory/test.yml site.yml
 
-5. РњРѕР¶РЅРѕ Р»Рё РїРѕСЃРјРѕС‚СЂРµС‚СЊ СЃРѕРґРµСЂР¶РёРјРѕРµ Р·Р°С€РёС„СЂРѕРІР°РЅРЅРѕРіРѕ С„Р°Р№Р»Р° Р±РµР· РєРѕРјР°РЅРґС‹ СЂР°СЃС€РёС„СЂРѕРІРєРё С„Р°Р№Р»Р°? Р•СЃР»Рё РјРѕР¶РЅРѕ, С‚Рѕ РєР°Рє?
+PLAY [Print os facts] ***************************************************************************************************
 
-РћРўР’Р•Рў:  ansible-vault view 
+TASK [Gathering Facts] **************************************************************************************************
+ok: [localhost]
 
-6. РљР°Рє РІС‹РіР»СЏРґРёС‚ РєРѕРјР°РЅРґР° Р·Р°РїСѓСЃРєР° `playbook`, РµСЃР»Рё РїРµСЂРµРјРµРЅРЅС‹Рµ Р·Р°С€РёС„СЂРѕРІР°РЅС‹?
+TASK [Print OS] *********************************************************************************************************
+ok: [localhost] => {
+    "msg": "Ubuntu"
+}
 
-РћРўР’Р•Рў: ansible-playbook --ask-vault-pass playbook.yml
+TASK [Print fact] *******************************************************************************************************
+ok: [localhost] => {
+    "msg": "all default fact"
+}
 
-7. РљР°Рє РЅР°Р·С‹РІР°РµС‚СЃСЏ РјРѕРґСѓР»СЊ РїРѕРґРєР»СЋС‡РµРЅРёСЏ Рє host РЅР° windows?
+PLAY RECAP **************************************************************************************************************
+localhost                  : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
 
-РћРўР’Р•Рў:  winrm
 
-8. РџСЂРёРІРµРґРёС‚Рµ РїРѕР»РЅС‹Р№ С‚РµРєСЃС‚ РєРѕРјР°РЅРґС‹ РґР»СЏ РїРѕРёСЃРєР° РёРЅС„РѕСЂРјР°С†РёРё РІ РґРѕРєСѓРјРµРЅС‚Р°С†РёРё ansible РґР»СЏ РјРѕРґСѓР»СЏ РїРѕРґРєР»СЋС‡РµРЅРёР№ ssh
 
-РћРўР’Р•Рў:  ansible-doc -t connection ssh
 
-9. РљР°РєРѕР№ РїР°СЂР°РјРµС‚СЂ РёР· РјРѕРґСѓР»СЏ РїРѕРґРєР»СЋС‡РµРЅРёСЏ `ssh` РЅРµРѕР±С…РѕРґРёРј РґР»СЏ С‚РѕРіРѕ, С‡С‚РѕР±С‹ РѕРїСЂРµРґРµР»РёС‚СЊ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ, РїРѕРґ РєРѕС‚РѕСЂС‹Рј РЅРµРѕР±С…РѕРґРёРјРѕ СЃРѕРІРµСЂС€Р°С‚СЊ РїРѕРґРєР»СЋС‡РµРЅРёРµ?
+3. Воспользуйтесь подготовленным (используется docker) или создайте собственное окружение для проведения дальнейших испытаний.
 
-РћРўР’Р•Рў: remote_user 
+Выполнено
 
+
+4. Проведите запуск playbook на окружении из prod.yml. Зафиксируйте полученные значения some_fact для каждого из managed host.
+```
+ivan@ubt-tst:~/netology-ansible1$ ansible-playbook -i inventory/prod.yml site.yml
+
+PLAY [Print os facts] ***************************************************************************************************
+
+TASK [Gathering Facts] **************************************************************************************************
+ok: [debian]
+ok: [centos]
+
+TASK [Print OS] *********************************************************************************************************
+ok: [centos] => {
+    "msg": "CentOS"
+}
+ok: [debian] => {
+    "msg": "Debian"
+}
+
+TASK [Print fact] *******************************************************************************************************
+ok: [centos] => {
+    "msg": "el"
+}
+ok: [debian] => {
+    "msg": "deb"
+}
+
+PLAY RECAP **************************************************************************************************************
+centos                     : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+debian                     : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
+
+
+
+5. Добавьте факты в group_vars каждой из групп хостов так, чтобы для some_fact получились следующие значения: для deb - 'deb default fact', для el - 'el default fact'.
+
+Сделал
+
+6. Повторите запуск playbook на окружении prod.yml. Убедитесь, что выдаются корректные значения для всех хостов.
+
+```
+ivan@ubt-tst:~/netology-ansible1$ ansible-playbook -i inventory/prod.yml site.yml
+
+PLAY [Print os facts] ***************************************************************************************************
+
+TASK [Gathering Facts] **************************************************************************************************
+ok: [debian]
+ok: [centos]
+
+TASK [Print OS] *********************************************************************************************************
+ok: [centos] => {
+    "msg": "CentOS"
+}
+ok: [debian] => {
+    "msg": "Debian"
+}
+
+TASK [Print fact] *******************************************************************************************************
+ok: [centos] => {
+    "msg": "el default fact"
+}
+ok: [debian] => {
+    "msg": "deb default fact"
+}
+
+PLAY RECAP **************************************************************************************************************
+centos                     : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+debian                     : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
+
+
+
+7. При помощи ansible-vault зашифруйте факты в group_vars/deb и group_vars/el с паролем netology.
+```
+ivan@ubt-tst:~/netology-ansible1$ ansible-vault encrypt group_vars/deb/examp.yml
+New Vault password:
+Confirm New Vault password:
+Encryption successful
+ivan@ubt-tst:~/netology-ansible1$ ansible-vault encrypt group_vars/el/examp.yml
+New Vault password:
+Confirm New Vault password:
+Encryption successful
+
+```
+
+8. Запустите playbook на окружении prod.yml. При запуске ansible должен запросить у вас пароль. Убедитесь в работоспособности.
+
+```
+ivan@ubt-tst:~/netology-ansible1$ ansible-playbook -i inventory/prod.yml site.yml --ask-vault-pass
+Vault password:
+
+PLAY [Print os facts] ***************************************************************************************************
+
+TASK [Gathering Facts] **************************************************************************************************
+ok: [debian]
+ok: [centos]
+
+TASK [Print OS] *********************************************************************************************************
+ok: [centos] => {
+    "msg": "CentOS"
+}
+ok: [debian] => {
+    "msg": "Debian"
+}
+
+TASK [Print fact] *******************************************************************************************************
+ok: [centos] => {
+    "msg": "el default fact"
+}
+ok: [debian] => {
+    "msg": "deb default fact"
+}
+
+PLAY RECAP **************************************************************************************************************
+centos                     : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+debian                     : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
+
+
+9. Посмотрите при помощи ansible-doc список плагинов для подключения. Выберите подходящий для работы на control node.
+
+Плагин local
+
+
+10. В prod.yml добавьте новую группу хостов с именем local, в ней разместите localhost с необходимым типом подключения.
+
+Сделал
+
+11. Запустите playbook на окружении prod.yml. При запуске ansible должен запросить у вас пароль. Убедитесь что факты some_fact для каждого из хостов определены из верных group_vars.
+
+
+```
+ivan@ubt-tst:~/netology-ansible1$ ansible-playbook -i inventory/prod.yml site.yml --ask-vault-pass
+Vault password:
+
+PLAY [Print os facts] ***************************************************************************************************
+
+TASK [Gathering Facts] **************************************************************************************************
+ok: [localhost]
+ok: [debian]
+ok: [centos]
+
+TASK [Print OS] *********************************************************************************************************
+ok: [centos] => {
+    "msg": "CentOS"
+}
+ok: [debian] => {
+    "msg": "Debian"
+}
+ok: [localhost] => {
+    "msg": "Ubuntu"
+}
+
+TASK [Print fact] *******************************************************************************************************
+ok: [centos] => {
+    "msg": "el default fact"
+}
+ok: [debian] => {
+    "msg": "deb default fact"
+}
+ok: [localhost] => {
+    "msg": "all default fact"
+}
+
+PLAY RECAP **************************************************************************************************************
+centos                     : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+debian                     : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+localhost                  : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+```
+
+12. Заполните README.md ответами на вопросы. Сделайте git push в ветку master. В ответе отправьте ссылку на ваш открытый репозиторий с изменённым playbook и заполненным README.md.
+
+Заполнил
