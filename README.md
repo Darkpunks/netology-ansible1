@@ -21,7 +21,7 @@ ok: [localhost] => {
 PLAY RECAP **************************************************************************************************************
 localhost                  : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ```
-
+<img width="700" alt="2" src="https://github.com/Darkpunks/netologyProject/blob/main/second%20part/8.1..jpg">
 
 2. Найдите файл с переменными (group_vars) в котором задаётся найденное в первом пункте значение и поменяйте его на 'all default fact'.
 ```
